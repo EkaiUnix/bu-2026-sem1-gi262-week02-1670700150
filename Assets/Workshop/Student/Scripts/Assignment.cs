@@ -46,7 +46,18 @@ namespace Assignment
         public GameObject[] as01_items;
         public void AS01_RandomItemDrop()
         {
-            throw new NotImplementedException();
+            if (as01_items == null || as01_items.Length == 0)
+            {
+                Debug.LogWarning("No items to drop!");
+                return;
+            }
+
+            int randomIndex = UnityEngine.Random.Range(0, as01_items.Length);
+            GameObject selectedItem = as01_items[randomIndex];
+
+            GameObject spawnedItem = Instantiate(selectedItem);
+
+            Debug.Log($"Got item: {spawnedItem.name}");
         }
 
         /*
@@ -106,9 +117,31 @@ namespace Assignment
         public GameObject[] as02_floorTiles;
         public int as02_columns;
         public int as02_rows;
+
         public void AS02_NestedLoopForCreate2DMap()
         {
-            throw new NotImplementedException();
+            if (as02_floorTiles == null || as02_floorTiles.Length == 0)
+            {
+                Debug.LogWarning("No floor tiles specified!");
+                return;
+            }
+
+            for (int y = 0; y < as02_rows; y++)
+            {
+                string rowOutput = "";
+
+                for (int x = 0; x < as02_columns; x++)
+                {
+                    int randomIndex = UnityEngine.Random.Range(0, as02_floorTiles.Length);
+                    GameObject selectedTile = as02_floorTiles[randomIndex];
+
+                    GameObject tile = Instantiate(selectedTile, new Vector2(x, y), transform.rotation);
+
+                    rowOutput += tile.name;
+                }
+
+                Debug.Log(rowOutput);
+            }
         }
 
         /*
