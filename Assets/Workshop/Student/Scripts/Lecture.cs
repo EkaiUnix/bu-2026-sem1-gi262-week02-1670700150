@@ -108,7 +108,16 @@ namespace Assignment
         public string[] lct04_ironManSuitNames;
         public void LCT04_LoopAndArray()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("===== Log by One increment =====");
+            for (int i = 0; i < lct04_ironManSuitNames.Length; i++) //เพิ่มที่ละ 1
+            {
+                Debug.Log(lct04_ironManSuitNames[i]);
+            }
+            Debug.Log("===== Log by One increment =====");
+            for(int i = 0; i < lct04_ironManSuitNames.Length; i+=2) //เพิ่มที่ละ 2
+            {
+                Debug.Log(lct04_ironManSuitNames[i]);
+            }
         }
 
         /*
@@ -143,7 +152,22 @@ namespace Assignment
          */
         public void LCT05_Syntax2DArray()
         {
-            throw new System.NotImplementedException();
+            int[,] my2DArray = new int[3,3] // 3 ชุด 3 ตัวเลข ชุดละ 3 ตัวเลข
+            {// col = แนวนอน Row = แนวตั้ง
+                {1,2,3}, //Row 1 = 0
+                {4,5,6}, //Row 2 = 1
+                {7,8,9}, //Row 3 = 2
+            };
+            string rowStr = "";
+
+            for (int row = 0; row < my2DArray.GetLength(0); row++)  //Array ช่องแรก (1/4/7) row
+            {
+                for (int col = 0; col < my2DArray.GetLength(1); col++) //Array ช่องสอง (1/2/3) Col
+                {
+                    rowStr += my2DArray[row, col] + ",";
+                }
+                Debug.Log(rowStr);
+            }
         }
 
         /*
@@ -173,6 +197,7 @@ namespace Assignment
          * - lct06_my2DArray: อาร์เรย์ 2 มิติ (2D array) แก้ไขค่าได้จาก Inspector
          */
         [Header("LCT06_SizeOf2DArray")]
+        public int[,] LCT062DArray;
         public Grid2DInt lct06_my2DArray = new Grid2DInt
         {
             rows = 3,
@@ -182,6 +207,14 @@ namespace Assignment
         public void LCT06_SizeOf2DArray()
         {
             int[,] my2DArray = lct06_my2DArray.Get2DArray();
+
+            int rows = my2DArray.GetLength(0);
+            int cols = my2DArray.GetLength(1);
+            int size = my2DArray.Length;
+
+            Debug.Log("rows" + rows);
+            Debug.Log("cols" + cols);
+            Debug.Log("size" + size);
         }
 
         /*
