@@ -21,14 +21,35 @@ namespace Assignment
 
         #region Lecture
 
+        public string[] ironManSuit; //Global
+
         public void LCT01_SyntaxArray()
         {
-            throw new System.NotImplementedException();
+            string[] _ironManSuit = new string[2]; //Local ขาดได้ แต่ห้ามเกิน , เริ่มที่ 0 , -1 
+            _ironManSuit[0] = "Mark I"; //set
+            _ironManSuit[1] = "Mark II";
+
+            string tonyStarkWear = _ironManSuit[0];
+            Debug.Log("TonysStark Wear: " + tonyStarkWear); //get
+            Debug.Log("Room size: " + _ironManSuit.Length);
+            //การเข้าถุงขนาด Array เพื่อใช้งานร่วมกับ For
+            Debug.Log(_ironManSuit[0]);
+            Debug.Log(_ironManSuit[1]);
         }
 
         public void LCT02_ArrayInitialize()
         {
-            throw new System.NotImplementedException();
+            string[] spidermanSuits = new string[] {"Classic" , "Black Suit" , "Iron Spider"};
+            string[] batmanSuit = new string[2] {"Classic batman" , "White bat"};
+
+            Debug.Log("Room size: " + spidermanSuits.Length);
+            Debug.Log(spidermanSuits[0]);
+            Debug.Log(spidermanSuits[1]);
+            Debug.Log(spidermanSuits[2]);
+
+            Debug.Log("Room size: " + batmanSuit.Length);
+            Debug.Log(batmanSuit[0]);
+            Debug.Log(batmanSuit[1]);
         }
 
         /*
@@ -47,7 +68,15 @@ namespace Assignment
          */
         public void LCT03_SyntaxLoop()
         {
-            throw new System.NotImplementedException();
+            for (int i = 0; i < 10; i++)
+            { 
+                Debug.Log("<10 : " + i); 
+            }
+            Debug.Log("==================");
+            for (int i = 0; i <= 10; i++)
+            {
+                Debug.Log("<10 : " + i);
+            }
         }
 
         /*
