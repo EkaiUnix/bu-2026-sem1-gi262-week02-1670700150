@@ -17,8 +17,8 @@ namespace Assignment
             AS05_DynamicIterationLoop();
             AS06_WhileLoopAndArray();
             AS07_HealTargetAtIndex();
-            // AS08_RandomPickingDialogue();
-            // AS09_MultiplicationTable();
+            AS08_RandomPickingDialogue();
+            AS09_MultiplicationTable();
             // AS10_FindSummationFromZeroToNUsingWhileLoop();
             // AS11_SpawnEnemies();
             // StartCoroutine(AS12_CountTime());
@@ -491,7 +491,8 @@ namespace Assignment
          * และแสดงผลข้อความออกมาทางหน้าจอ
          * ตัวอย่าง การใช้ function Random
          * int r = UnityEngine.Random.Range(0, dialogues.Length);
-         * สังเกตว่าจะต้องใส่ UnityEngine.Random แทนที่จะใช้ Random ได้เลย เนื่องจากว่าบางครั้งใน code มีการประกาศ using System; และ using UnityEngine; ไว้ทั้งคู่ ซึ่งทั้ง 2 namespace จะมี class Random อยู่ด้วยกันทั้งคู่ ทำให้ compile สับสนว่าจะใช้ Random จาก namespace ใด การระบุไปแบบแน่ชัดเลยว่าเป็น Random จาก UnityEngine โดยใช้ UnityEngine.Random เพื่อหลีกเลี่ยงปัญหานี้
+         * สังเกตว่าจะต้องใส่ UnityEngine.Random แทนที่จะใช้ Random ได้เลย เนื่องจากว่าบางครั้งใน code มีการประกาศ using System; และ using UnityEngine; 
+         * ไว้ทั้งคู่ ซึ่งทั้ง 2 namespace จะมี class Random อยู่ด้วยกันทั้งคู่ ทำให้ compile สับสนว่าจะใช้ Random จาก namespace ใด การระบุไปแบบแน่ชัดเลยว่าเป็น Random จาก UnityEngine โดยใช้ UnityEngine.Random เพื่อหลีกเลี่ยงปัญหานี้
          *
          * ตัวอย่างผลลัพธ์
          *
@@ -504,9 +505,20 @@ namespace Assignment
          */
         [Header("AS08_RandomPickingDialogue")]
         public string[] as08_dialogues;
+
         public void AS08_RandomPickingDialogue()
         {
-            throw new NotImplementedException();
+            if (as08_dialogues == null || as08_dialogues.Length == 0)
+            {
+                Debug.LogWarning("No dialogue available!");
+                return;
+            }
+
+            // สุ่ม Index จาก 0 ถึงความยาวของ Array
+            int r = UnityEngine.Random.Range(0, as08_dialogues.Length);
+
+            // แสดงผลข้อความบทสนทนาที่สุ่มได้ทาง Console
+            Debug.Log(as08_dialogues[r]);
         }
 
         /*
@@ -530,9 +542,15 @@ namespace Assignment
          */
         [Header("AS09_MultiplicationTable")]
         public int as09_n;
+
         public void AS09_MultiplicationTable()
         {
-            throw new NotImplementedException();
+            // วน Loop คำนวณสูตรคูณตั้งแต่ 1 ถึง 12
+            for (int i = 1; i <= 12; i++)
+            {
+                int result = as09_n * i;
+                Debug.Log($"{as09_n}x{i}={result}");
+            }
         }
 
         /*
