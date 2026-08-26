@@ -11,12 +11,12 @@ namespace Assignment
         public void Start()
         {
             AS01_RandomItemDrop();
-            // AS02_NestedLoopForCreate2DMap();
-            // AS03_NestedLoopForMakingWallAround();
-            // AS04_AttackEnemy();
-            // AS05_DynamicIterationLoop();
-            // AS06_WhileLoopAndArray();
-            // AS07_HealTargetAtIndex();
+            AS02_NestedLoopForCreate2DMap();
+            AS03_NestedLoopForMakingWallAround();
+            AS04_AttackEnemy();
+            AS05_DynamicIterationLoop();
+            AS06_WhileLoopAndArray();
+            AS07_HealTargetAtIndex();
             // AS08_RandomPickingDialogue();
             // AS09_MultiplicationTable();
             // AS10_FindSummationFromZeroToNUsingWhileLoop();
@@ -44,6 +44,7 @@ namespace Assignment
          */
         [Header("AS01_RandomItemDrop")]
         public GameObject[] as01_items;
+
         public void AS01_RandomItemDrop()
         {
             if (as01_items == null || as01_items.Length == 0)
@@ -55,7 +56,8 @@ namespace Assignment
             int randomIndex = UnityEngine.Random.Range(0, as01_items.Length);
             GameObject selectedItem = as01_items[randomIndex];
 
-            GameObject spawnedItem = Instantiate(selectedItem);
+            // กำหนดตำแหน่งให้อยู่ที่ Vector2(1, 1)
+            GameObject spawnedItem = Instantiate(selectedItem, new Vector2(1, 1), transform.rotation);
 
             Debug.Log($"Got item: {spawnedItem.name}");
         }
@@ -135,7 +137,7 @@ namespace Assignment
                     int randomIndex = UnityEngine.Random.Range(0, as02_floorTiles.Length);
                     GameObject selectedTile = as02_floorTiles[randomIndex];
 
-                    GameObject tile = Instantiate(selectedTile, new Vector2(x, y), transform.rotation);
+                    GameObject tile = Instantiate(selectedTile, new Vector3(x, y, 1f), transform.rotation);
 
                     rowOutput += tile.name;
                 }
@@ -233,9 +235,27 @@ namespace Assignment
         public GameObject as03_wall;
         public int as03_columns;
         public int as03_rows;
+
         public void AS03_NestedLoopForMakingWallAround()
         {
-            throw new NotImplementedException();
+            if (as03_wall == null)
+            {
+                Debug.LogWarning("No wall prefab specified!");
+                return;
+            }
+
+            // วน Loop ตามจำนวน Row และ Column
+            for (int y = 0; y < as03_rows; y++)
+            {
+                for (int x = 0; x < as03_columns; x++)
+                {
+                    // ตรวจสอบเงื่อนไขตำแหน่งขอบ (บน, ล่าง, ซ้าย, ขวา)
+                    if (x == 0 || x == as03_columns - 1 || y == 0 || y == as03_rows - 1)
+                    {
+                        Instantiate(as03_wall, new Vector2(x, y), transform.rotation);
+                    }
+                }
+            }
         }
 
         /*
@@ -268,9 +288,35 @@ namespace Assignment
         public int[] as04_enemyHP;
         public int as04_damage;
         public int as04_target;
+
         public void AS04_AttackEnemy()
         {
-            throw new NotImplementedException();
+            // ตรวจสอบความถูกต้องของ Array
+            if (as04_enemyHP == null || as04_enemyHP.Length == 0)
+            {
+                Debug.LogWarning("No enemy HP data!");
+                return;
+            }
+
+            // รูปแบบที่ 1: โจมตีตัวแรกในรายการ (index 0)
+            as04_enemyHP[0] -= as04_damage;
+            Debug.Log($"FirstEnemy hp :{as04_enemyHP[0]}");
+
+            // รูปแบบที่ 2: โจมตีตัวสุดท้ายในรายการ (index ล่าสุด)
+            int lastIndex = as04_enemyHP.Length - 1;
+            as04_enemyHP[lastIndex] -= as04_damage;
+            Debug.Log($"LastEnemy hp :{as04_enemyHP[lastIndex]}");
+
+            // รูปแบบที่ 3: โจมตีตัวเป้าหมายตาม index ที่ระบุ
+            if (as04_target >= 0 && as04_target < as04_enemyHP.Length)
+            {
+                as04_enemyHP[as04_target] -= as04_damage;
+                Debug.Log($"TargetEnemy {as04_target} hp :{as04_enemyHP[as04_target]}");
+            }
+            else
+            {
+                Debug.LogWarning("Target index is out of range!");
+            }
         }
 
         /*
@@ -291,9 +337,14 @@ namespace Assignment
          */
         [Header("AS05_DynamicIterationLoop")]
         public int as05_n;
+
         public void AS05_DynamicIterationLoop()
         {
-            throw new NotImplementedException();
+            // วน Loop จาก 0 ถึง n - 1 (น้อยกว่า as05_n)
+            for (int i = 0; i < as05_n; i++)
+            {
+                Debug.Log(i);
+            }
         }
 
         /*
@@ -340,9 +391,32 @@ namespace Assignment
          */
         [Header("AS06_WhileLoopAndArray")]
         public string[] as06_ironManSuitNames;
+
         public void AS06_WhileLoopAndArray()
         {
-            throw new NotImplementedException();
+            if (as06_ironManSuitNames == null || as06_ironManSuitNames.Length == 0)
+            {
+                Debug.LogWarning("No suit names in array!");
+                return;
+            }
+
+            // ===== Log by One =====
+            Debug.Log("======Log by One======");
+            int i = 0;
+            while (i < as06_ironManSuitNames.Length)
+            {
+                Debug.Log(as06_ironManSuitNames[i]);
+                i += 1;
+            }
+
+            // ===== Log by Two =====
+            Debug.Log("======Log by Two======");
+            int j = 0;
+            while (j < as06_ironManSuitNames.Length)
+            {
+                Debug.Log(as06_ironManSuitNames[j]);
+                j += 2;
+            }
         }
 
         /*
@@ -378,9 +452,34 @@ namespace Assignment
         public int[] as07_heroHPs;
         public int as07_heal;
         public int as07_targetIndex;
+
         public void AS07_HealTargetAtIndex()
         {
-            throw new NotImplementedException();
+            if (as07_heroHPs == null || as07_heroHPs.Length == 0)
+            {
+                Debug.LogWarning("No hero HP data!");
+                return;
+            }
+
+            // รูปแบบที่ 1: Heal ตัวแรกในรายการ (index 0)
+            as07_heroHPs[0] += as07_heal;
+            Debug.Log($"FirstHero hp :{as07_heroHPs[0]}");
+
+            // รูปแบบที่ 2: Heal ตัวสุดท้ายในรายการ (index ล่าสุด)
+            int lastIndex = as07_heroHPs.Length - 1;
+            as07_heroHPs[lastIndex] += as07_heal;
+            Debug.Log($"LastHero hp :{as07_heroHPs[lastIndex]}");
+
+            // รูปแบบที่ 3: Heal ตัวเป้าหมายตาม index ที่ระบุ
+            if (as07_targetIndex >= 0 && as07_targetIndex < as07_heroHPs.Length)
+            {
+                as07_heroHPs[as07_targetIndex] += as07_heal;
+                Debug.Log($"TargetHero {as07_targetIndex} hp :{as07_heroHPs[as07_targetIndex]}");
+            }
+            else
+            {
+                Debug.LogWarning("Target index is out of range!");
+            }
         }
 
         /*
