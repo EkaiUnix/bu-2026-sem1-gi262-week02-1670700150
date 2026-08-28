@@ -19,14 +19,14 @@ namespace Assignment
             AS07_HealTargetAtIndex();
             AS08_RandomPickingDialogue();
             AS09_MultiplicationTable();
-            // AS10_FindSummationFromZeroToNUsingWhileLoop();
-            // AS11_SpawnEnemies();
-            // StartCoroutine(AS12_CountTime());
-            // AS13_SumOfNumbersInRow();
-            // AS14_SumOfNumbersInColumn();
-            // AS15_MakeTheTriangle();
-            // AS16_MultiplicationTableOf_2_3_and_4();
-            // EX_01_TicTacToeGame_TurnPlay();
+            AS10_FindSummationFromZeroToNUsingWhileLoop();
+            AS11_SpawnEnemies();
+            //StartCoroutine(AS12_CountTime());
+            AS13_SumOfNumbersInRow();
+            AS14_SumOfNumbersInColumn();
+            AS15_MakeTheTriangle();
+            AS16_MultiplicationTableOf_2_3_and_4();
+            EX_01_TicTacToeGame_TurnPlay();
 
         }
 
@@ -574,10 +574,21 @@ namespace Assignment
          */
         [Header("AS10_FindSummationFromZeroToNUsingWhileLoop")]
         public int as10_n;
+
         public void AS10_FindSummationFromZeroToNUsingWhileLoop()
         {
-            throw new NotImplementedException();
+            int sum = 0;
+            int i = 1;
 
+            // วนลูปบวกสะสมค่าตั้งแต่ 1 ถึง as10_n
+            while (i <= as10_n)
+            {
+                sum += i; // บวกค่า i เข้าไปใน sum
+                i++;      // เพิ่มค่าตัวนับ i ขึ้น 1
+            }
+
+            // แสดงผลลัพธ์ตามรูปแบบที่โจทย์กำหนด
+            Debug.Log($"ผลรวมของ n จาก 1 ถึง {as10_n} คือ {sum}");
         }
 
         /*
@@ -601,9 +612,28 @@ namespace Assignment
         [Header("AS11_SpawnEnemies")]
         public int[] as11_enemyHPs;
         public GameObject as11_enemyPrefab;
+
         public void AS11_SpawnEnemies()
         {
-            throw new NotImplementedException();
+            if (as11_enemyPrefab == null || as11_enemyHPs == null || as11_enemyHPs.Length == 0)
+            {
+                Debug.LogWarning("Enemy Prefab or HP Array is missing!");
+                return;
+            }
+
+            // วนลูปตามจำนวนสมาชิกใน Array ของ HP
+            for (int i = 0; i < as11_enemyHPs.Length; i++)
+            {
+                // ตัวแรก (i = 0) จะเริ่มที่ X = 3 และ Y = 3
+                // ตัวถัดไปจะขยับ X ไปทีละ 1 (กลายเป็น X = 4, 5, 6, ...)
+                float spawnX = 1f + i;
+                float spawnY = 3f;
+
+                Vector3 spawnPosition = new Vector3(spawnX, spawnY, 0f);
+
+                // สร้าง GameObject ศัตรูในตำแหน่งที่กำหนด
+                Instantiate(as11_enemyPrefab, spawnPosition, transform.rotation);
+            }
         }
 
         /*
@@ -614,9 +644,24 @@ namespace Assignment
          */
         [Header("AS12_CountTime")]
         public float as12_countTime;
+
         public IEnumerator AS12_CountTime()
         {
-            throw new NotImplementedException();
+            float timer = as12_countTime;
+
+            // วนลูปนับถอยหลังตราบใดที่เวลายังมากกว่า 0
+            while (timer > 0)
+            {
+                Debug.Log($"Time remaining: {timer:F1} s");
+
+                // หน่วงเวลาการทำงาน 1 วินาที ก่อนไปรอบถัดไป
+                yield return new WaitForSeconds(1f);
+
+                // ลดเวลาลงทีละ 1 วินาที
+                timer -= 1f;
+            }
+
+            Debug.Log("Time's up!");
         }
 
         /*
@@ -671,10 +716,30 @@ namespace Assignment
             data = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
         };
         public int as13_row;
+
         public void AS13_SumOfNumbersInRow()
         {
             var matrix = as13_matrix.Get2DArray();
-            throw new NotImplementedException();
+
+            // ตรวจสอบว่า Row ที่เลือกอยู่ในช่วงที่มีจริงหรือไม่
+            if (as13_row < 0 || as13_row >= matrix.GetLength(0))
+            {
+                Debug.LogWarning("Row index out of bounds!");
+                return;
+            }
+
+            int sum = 0;
+
+            // วนลูปตามจำนวน Column ใน Row นั้นๆ (ใช้ GetLength(1))
+            for (int col = 0; col < matrix.GetLength(1); col++)
+            {
+                sum += matrix[as13_row, col];
+            }
+
+            // แสดงผลลัพธ์ตามรูปแบบตัวอย่างโจทย์
+            Debug.Log("Row ...");
+            Debug.Log(as13_row);
+            Debug.Log(sum);
         }
 
         /*
@@ -727,10 +792,30 @@ namespace Assignment
             data = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
         };
         public int as14_column;
+
         public void AS14_SumOfNumbersInColumn()
         {
             var matrix = as14_matrix.Get2DArray();
-            throw new NotImplementedException();
+
+            // ตรวจสอบว่า Column ที่เลือกอยู่ในช่วงที่มีจริงหรือไม่
+            if (as14_column < 0 || as14_column >= matrix.GetLength(1))
+            {
+                Debug.LogWarning("Column index out of bounds!");
+                return;
+            }
+
+            int sum = 0;
+
+            // วนลูปตามจำนวน Row (แถวแนวตั้ง) ใน Column นั้นๆ (ใช้ GetLength(0))
+            for (int row = 0; row < matrix.GetLength(0); row++)
+            {
+                sum += matrix[row, as14_column];
+            }
+
+            // แสดงผลลัพธ์ตามรูปแบบตัวอย่างโจทย์
+            Debug.Log("Col ...");
+            Debug.Log(as14_column);
+            Debug.Log(sum);
         }
 
         /*
@@ -778,9 +863,23 @@ namespace Assignment
          */
         [Header("AS15_MakeTheTriangle")]
         public int as15_size;
+
         public void AS15_MakeTheTriangle()
         {
-            throw new NotImplementedException();
+            // ลูปภายนอกควบคุมจำนวนแถว (เริ่มที่ 1 ถึง as15_size)
+            for (int i = 1; i <= as15_size; i++)
+            {
+                string line = "";
+
+                // ลูปภายในควบคุมจำนวนดาวในแต่ละแถว (เริ่มที่ 1 ถึง i)
+                for (int j = 1; j <= i; j++)
+                {
+                    line += "*";
+                }
+
+                // พิมพ์ดาวของแถวนั้นๆ ออกมา (แทนการสร้างวัตถุในแถวนั้น)
+                Debug.Log(line);
+            }
         }
 
         /*
@@ -809,7 +908,27 @@ namespace Assignment
          */
         public void AS16_MultiplicationTableOf_2_3_and_4()
         {
-            throw new NotImplementedException();
+            // ลูปนอก: ควบคุมตัวคูณ (1 ถึง 12) เพื่อสร้างแต่ละบรรทัด
+            for (int multiplier = 1; multiplier <= 12; multiplier++)
+            {
+                string line = "";
+
+                // ลูปใน: ควบคุมแม่สูตรคูณ (แม่ 2 ถึง แม่ 4) เรียงในแนวขนาน
+                for (int baseNum = 2; baseNum <= 4; baseNum++)
+                {
+                    int result = baseNum * multiplier;
+                    line += $"{baseNum} x {multiplier} = {result}";
+
+                    // เติม \t เว้นวรรคแท็บเฉพาะแม่ 2 และแม่ 3 (ไม่เติมปิดท้ายที่แม่ 4)
+                    if (baseNum < 4)
+                    {
+                        line += "\t";
+                    }
+                }
+
+                // พิมพ์ผลลัพธ์ของบรรทัดนั้นๆ
+                Debug.Log(line);
+            }
         }
 
         #endregion
@@ -1021,20 +1140,94 @@ namespace Assignment
             rows = 3,
             cols = 3,
             data = new string[] {
-                "X", "X", "O",
-                "X", "O", "X",
-                "", "", ""
-            }
+            "X", "X", "O",
+            "X", "O", "X",
+            "", "", ""
+        }
         };
-        public string ex01_playerTurn = "O";//กรอกเป็น X พิมพ์ใหญ่หรือ O พิมพ์ใหญ่เท่านั้น
+        public string ex01_playerTurn = "O";
         public int ex01_row = 2;
         public int ex01_column = 0;
+
         public void EX_01_TicTacToeGame_TurnPlay()
         {
             var board = ex01_board.Get2DArray();
-            throw new NotImplementedException();
+
+            // 1. ตรวจสอบว่าพิกัดออกนอกตารางหรือไม่
+            if (ex01_row < 0 || ex01_row >= 3 || ex01_column < 0 || ex01_column >= 3)
+            {
+                PrintBoard(board);
+                Debug.Log(">> Invalid move");
+                return;
+            }
+
+            // ดึงค่าในช่องปัจจุบันและตัดช่องว่างออก
+            string currentCell = board[ex01_row, ex01_column] != null ? board[ex01_row, ex01_column].Trim() : "";
+
+            // 2. ถ้าช่องนั้นมีตัว X หรือ O อยู่แล้ว (ไม่ว่าจะพิมพ์เล็กหรือใหญ่) ถือว่า Invalid move
+            if (currentCell.Equals("X", System.StringComparison.OrdinalIgnoreCase) ||
+                currentCell.Equals("O", System.StringComparison.OrdinalIgnoreCase))
+            {
+                PrintBoard(board);
+                Debug.Log(">> Invalid move");
+                return;
+            }
+
+            // 3. หมากถูกต้อง ลงหมากของผู้เล่น
+            board[ex01_row, ex01_column] = ex01_playerTurn;
+
+            // 4. แสดงผลกระดาน
+            PrintBoard(board);
+
+            // 5. เช็กผลการเล่น
+            if (CheckWin(board, ex01_playerTurn))
+            {
+                Debug.Log($">> {ex01_playerTurn} Win!");
+            }
+            else if (IsBoardFull(board))
+            {
+                Debug.Log(">> Draw");
+            }
+            else
+            {
+                Debug.Log(">> Continue");
+            }
         }
         #endregion
+
+        private bool CheckWin(string[,] b, string p)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                // เช็กแนวนอน และ แนวตั้ง (ไม่สนตัวพิมพ์เล็ก-ใหญ่)
+                if (SamePlayer(b[i, 0], p) && SamePlayer(b[i, 1], p) && SamePlayer(b[i, 2], p)) return true;
+                if (SamePlayer(b[0, i], p) && SamePlayer(b[1, i], p) && SamePlayer(b[2, i], p)) return true;
+            }
+            // เช็กแนวทะแยง
+            if (SamePlayer(b[0, 0], p) && SamePlayer(b[1, 1], p) && SamePlayer(b[2, 2], p)) return true;
+            if (SamePlayer(b[0, 2], p) && SamePlayer(b[1, 1], p) && SamePlayer(b[2, 0], p)) return true;
+
+            return false;
+        }
+
+        private bool SamePlayer(string cellValue, string player)
+        {
+            if (string.IsNullOrEmpty(cellValue)) return false;
+            return cellValue.Trim().Equals(player.Trim(), System.StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool IsBoardFull(string[,] b)
+        {
+            for (int r = 0; r < 3; r++)
+            {
+                for (int c = 0; c < 3; c++)
+                {
+                    string cell = b[r, c] != null ? b[r, c].Trim() : "";
+                    if (string.IsNullOrEmpty(cell)) return false;
+                }
+            }
+            return true;
+        }
 
         private void PrintBoard(string[,] board)
         {
